@@ -9,8 +9,8 @@ catalog: true
 tags:
     - tos
 ---
-## 本条款适用于：ling-yin.top 和 741682.xyz 及其关联链接和域名，ling-yin.top 和 741682.xyz 及其关联链接和域名统称为本网站。
-## This clause applies to: ling-yin.top and 741682.xyz and affiliated links and domains ling-yin.top and 741682.xyz and affiliated links and domain names are referred to as this website.
+本条款适用于：ling-yin.top 和 741682.xyz 及其关联链接和域名，ling-yin.top 和 741682.xyz 及其关联链接和域名统称为本网站。  
+This clause applies to: ling-yin.top and 741682.xyz and affiliated links and domains ling-yin.top and 741682.xyz and affiliated links and domain names are referred to as this website.
 
 ## 服务条款 Disclaimer
 
@@ -37,3 +37,5 @@ tags:
 
 继续浏览本网站即表示您同意所有条款和条件  
 By continuing to browse this website, you agree to all terms and conditions.
+
+~~抄袭~~ 借鉴自 @yyyyt
