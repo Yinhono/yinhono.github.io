@@ -1,11 +1,10 @@
-Hi there, I'm Lingyin(铃音), and you can also call me Rainyin or Yinhono. I'm currently a poor, suffering high school student in Pudong, Shanghai.
+Hey there! This is Rainyin, also known as Yinhono in English. I'm currently a stressed-out tenth grader in Pudong, Shanghai.
 
-I used to be really into classical Chinese literature, so I took my name from the Ci poem title "Yu Lin Ling" (Rain Bell) by Liu Yong. I thought a three-character name looked awkward, so I added the character "Yin" (sound) at the end. Of course, after being tortured by liberal arts studies, I now consider classical Chinese my lifelong nemesis (laughs).
+I used to really like classical Chinese literature, so my name comes from the tune title "Yu Lin Ling" (Rain Dripping on Bells) from Liu Yong's poem. I thought three characters looked awkward, so I added "Yin" (sound) at the end, making my full name "Yu Lin Ling Yin," shortened to Lingyin. Of course, after suffering through literature classes, classical Chinese has become my arch-nemesis now (lol).
 
-I'm a huge fan of Firefly. My friends say I'm a bit immature. I'm not really a tech expert, just someone who started a bit earlier on this path, so I know a little bit more.
+I'm a Firefly fan, and my friends say I'm not quite mature mentally. I'm definitely not a tech guru (seriously, I'm pretty mediocre), just started a bit earlier than others on this path so I know slightly more.
 
-My interests are pretty diverse (including games, online platforms, favorite music producers and singers, and maybe more):
+My interests aren't too complicated (including games, platforms I browse, musicians I like, and maybe other stuff):
+Minecraft (survival, building, a little bit of redstone, currently enjoy playing Hypixel Bed Wars - my ID is Rainyinneko, feel free to hit me up), Genshin Impact (quit already), Star Rail, Sky: Children of the Light (log in occasionally), The Three-Body Problem, Coolapk user, Laohu user, Bilibili user, mimi, Chengxing, Pikasonic, Tiaozi, Aimer, Avicii, car enthusiast, aviation enthusiast (mostly model aircraft), slight military enthusiast (mainly just enjoy watching Teacher Hua's videos while eating), phone rooting, Magisk modules, and many other random things.
 
-Minecraft(survival,building,a little bit of redstone,currently really into Bed Wars - my ID is Rain_Lingyin, feel free to hit me up on Hypixel!), Genshin Impact (retired), Honkai: Star Rail, Sky: Children of the Light (play occasionally), The Three-Body Problem, KuAn, Linuxdo, Bilibili, Mimi, Orangestar, Pikasonic, COP, Aimer, Avicii, Train enthusiast, Aviation enthusiast (more into model airplanes), Slightly into military stuff (mostly just enjoy watching videos from 花老师 as background while I eat)
-
-So... I've talked a lot about myself. Let's all work hard together!
+Nice to meet you all!
