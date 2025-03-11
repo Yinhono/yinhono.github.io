@@ -14,8 +14,8 @@ tags:
 
 ```yaml
 {
-    "name": "flclash autostart",
-    "description": "flclash开机自启",
+    "name": "Flclash autostart",
+    "description": "Flclash开机自启",
     "priority": 1,
     "condition": "systemReady == true",
     "actions": [
