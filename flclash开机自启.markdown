@@ -1,0 +1,30 @@
+---
+layout:     post
+title:      "flclash开机自启"
+date:       2025-3-11 19:20:00
+author:     "Rainyin"
+header-img: "jpg/Mar-7.jpg"
+catalog: true
+tags:
+    - 文档
+---
+作者已表示暂未计划为`Flclash Android`添加自启动，详见 [此issue](https://github.com/chen08209/FlClash/issues/402)
+
+所以只能通过一些其他方式来自启动，比如`thanox`的`情景模式`
+
+```yaml
+{
+    "name": "flclash autostart",
+    "description": "flclash开机自启",
+    "priority": 1,
+    "condition": "systemReady == true",
+    "actions": [
+        "su.exe('am start -n com.follow.clash/.TempActivity -a com.follow.clash.action.START -c android.intent.category.DEFAULT')"
+    ]
+}
+```
+记得打开`引擎`里的`suAPI`并给予`Thanox` `root权限`，不然无法正常使用
+
+如果你不想用`Thanox`也可以，把`actions`的`am start`那一段丢进`service.sh`里再写个`module.prop`打包成`模块`刷入`magisk/ksu`理论上也行
+
+一些其他可控制`Flclash Android`的`shell`可见 [此issue](https://github.com/chen08209/FlClash/issues/564)
