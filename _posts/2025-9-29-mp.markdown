@@ -5,7 +5,6 @@ date:       2025-9-29 19:20:00
 author:     "Rainyin"
 catalog: true
 ---
-```markdown
 > 本文源自 linuxdo @Hantong，因作者已删帖所以在此留存备份以便查看。
 
 *   Current version: v0.1.0
