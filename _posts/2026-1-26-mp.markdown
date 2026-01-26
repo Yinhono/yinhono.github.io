@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "记一次mihomo代理udp时死活都会跳过兜底规则的解决方法"
-date:       2025-1-26 19:20:00
+date:       2026-1-26 19:20:00
 author:     "Rainyin"
 catalog: true
 ---
