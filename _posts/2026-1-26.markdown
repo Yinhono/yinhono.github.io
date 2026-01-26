@@ -1,0 +1,422 @@
+---
+layout:     post
+title:      "记一次mihomo代理udp时死活都会跳过兜底规则的解决方法"
+date:       2025-1-26 19:20:00
+author:     "Rainyin"
+catalog: true
+---
+省流：强制给节点开启udp=true
+
+这几天沉迷roblox无法自拔，但由于家境贫寒买不起正常的大厂加速器，索性直接走megabox代理出去好了，~~反正roblox延迟高点也不大~~
+
+然后就遇到了这个东西：
+```
+[UDP] 198.18.0.1:62620 --> 128.116.48.33:60905 doesn't match any rule using DIRECT
+```
+诶？我兜底规则呢???
+![whatthefuck.webp](https://cdn.nodeimage.com/i/nvpm7LWax1LTIF8FLTRJEpn9cmUzBNTE.webp)
+但是明明兜底规则使用tcp的时候是正常的啊？
+
+于是和Gemini大战二十回合，然后这个弱智让我加roblox的geoip走代理...
+
+我真没招了.jpg
+
+最后迫不得已使用万能的google search，but搜索结果不说有很多吧，也几乎等于0...
+
+唉...只能去试着翻mihomo文档了
+
+然后给我翻出来了个这个：
+![docs.webp](https://cdn.nodeimage.com/i/qyJWHlc2L5bA84KDLdXXGbiw3yFy30uD.webp)
+
+诶是不是节点默认没开udp的原因？
+于是用clashverge的全局扩展脚本强制给udp=true加上了
+问题还真tm解决了...
+
+附我的全局扩展脚本，抄的网络，根据我自己的使用需求改了下
+```
+const customRules = [
+    // 在此添加自定义代理规则。
+    // 例如：
+    // "DOMAIN-SUFFIX,gstatic.com,节点选择",
+    "DOMAIN-SUFFIX,hypixel.net,节点选择",
+];
+
+// 默认测试网址
+const test_url = "http://www.gstatic.com/generate_204";
+// 测试网址检测间隔
+const test_interval = 240;
+// 测试网址的间隔差值，超过这个差值就会切换节点，越小切换越频繁
+const test_tolerance = 80;
+
+// 国内DNS服务器,只写最快的一个，写多了会导致访问速度变慢和内核内存占用变大
+const domesticNameservers = [
+    "tls://223.5.5.5", // 阿里云公共DNS
+];
+// 国外DNS服务器，同上
+const foreignNameservers = [
+    "tls://dns.opendns.com", // OpenDNS
+];
+
+// 规则集通用配置
+const ruleProviderCommon = {
+    type: "http",
+    format: "mrs",
+    interval: 86400,
+};
+
+// 代理组通用配置
+const groupBaseOption = {
+    "interval": 300,
+    "timeout": 3000,
+    "url": test_url,
+    "lazy": true,
+    "hidden": false,
+    "disable-udp": false,
+};
+
+// 代理规则
+const rules = [
+    // 自定义规则
+    ...customRules,
+    // 规则集
+    "RULE-SET,ipprivate,局域网,no-resolve",
+    "RULE-SET,private,局域网",
+    "RULE-SET,roblox,Roblox",
+    "RULE-SET,google,Google",
+    "RULE-SET,bing,Bing",
+    "RULE-SET,onedrive,Onedrive",
+    "RULE-SET,microsoft,Microsoft",
+    "RULE-SET,ipdirect,中国,no-resolve",
+    "RULE-SET,direct,中国",
+    "RULE-SET,youtube,YouTube",
+    // 未匹配的规则 (兜底)
+    "MATCH,漏网之鱼",
+];
+
+// 规则集配置
+const ruleProviders = {
+    ipprivate: {
+        ...ruleProviderCommon,
+        behavior: "ipcidr",
+        url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs",
+        path: "./ruleset/lancidr.mrs",
+    },
+    private: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs",
+        path: "./ruleset/private.mrs",
+    },
+    direct: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs",
+        path: "./ruleset/direct.mrs",
+    },
+    ipdirect: {
+        ...ruleProviderCommon,
+        behavior: "ipcidr",
+        url: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs",
+        path: "./ruleset/cncidr.mrs",
+    },
+    google: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google.mrs",
+        path: "./ruleset/google.mrs",
+    },
+    microsoft: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft.mrs",
+        path: "./ruleset/microsoft.mrs",
+    },
+    bing: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/bing.mrs",
+        path: "./ruleset/bing.mrs",
+    },
+    onedrive: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/onedrive.mrs",
+        path: "./ruleset/onedrive.mrs",
+    },
+    youtube: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/youtube.mrs",
+        path: "./ruleset/youtube.mrs",
+    },
+    roblox: {
+        ...ruleProviderCommon,
+        behavior: "domain",
+        url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/roblox.mrs",
+        path: "./ruleset/roblox.mrs",
+    },
+};
+
+// 显示节点配置
+const proxyGroups = [
+    {
+        ...groupBaseOption,
+        name: "节点选择",
+        type: "select",
+        proxies: ["延迟选优", "手动选择", "故障转移", "负载均衡(散列)", "负载均衡(轮询)"],
+        icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png",
+    },
+    {
+        ...groupBaseOption,
+        name: "手动选择",
+        type: "select",
+        "include-all": true,
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/adjust.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "负载均衡(轮询)",
+        type: "load-balance",
+        strategy: "round-robin",
+        "include-all": true,
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/balance.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "负载均衡(散列)",
+        type: "load-balance",
+        strategy: "consistent-hashing",
+        "include-all": true,
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/merry_go.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "故障转移",
+        type: "fallback",
+        "include-all": true,
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/ambulance.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "延迟选优",
+        type: "url-test",
+        interval: test_interval,
+        tolerance: test_tolerance,
+        "include-all": true,
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/speed.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "局域网",
+        type: "select",
+        proxies: [
+            "DIRECT",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/link.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "Roblox",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "DIRECT",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://www.roblox.com/favicon.ico",
+    },
+    {
+        ...groupBaseOption,
+        name: "Google",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://www.clashverge.dev/assets/icons/google.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "Bing",
+        type: "select",
+        proxies: [
+            "DIRECT",
+            "节点选择",
+            "手动选择",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://www.bing.com/favicon.ico",
+    },
+    {
+        ...groupBaseOption,
+        name: "Onedrive",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "DIRECT",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png",
+    },
+    {
+        ...groupBaseOption,
+        name: "Microsoft",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "DIRECT",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/microsoft.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "中国",
+        type: "select",
+        proxies: [
+            "DIRECT",
+            "节点选择",
+            "手动选择",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/link.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "YouTube",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/youtube.svg",
+    },
+    {
+        ...groupBaseOption,
+        name: "漏网之鱼",
+        type: "select",
+        proxies: [
+            "节点选择",
+            "手动选择",
+            "DIRECT",
+            "延迟选优",
+            "故障转移",
+        ],
+        icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/fish.svg",
+    },
+];
+
+// DNS配置
+const dnsConfig = {
+    "enable": true,
+    "ipv6": true,
+    "prefer-h3": false,
+    "use-hosts": false,
+    "use-system-hosts": true,
+    "listen": "0.0.0.0:1053",
+    "cache-algorithm": "arc",
+    "enhanced-mode": "fake-ip",
+    "fake-ip-range": "198.18.0.1/16",
+    "fake-ip-filter-mode": "blacklist",
+    "fake-ip-filter": [
+        "+.lan",
+        "+.local",
+        "+.msftconnecttest.com",
+        "+.msftncsi.com",
+        "localhost.ptlogin2.qq.com",
+        "localhost.sec.qq.com",
+        "localhost.work.weixin.qq.com",
+        "*.localdomain",
+        "*.example",
+        "*.invalid",
+        "*.localhost",
+        "*.test",
+        "*.local",
+        "*.home.arpa"
+    ],
+    "nameserver": [...domesticNameservers],
+    "nameserver-policy": {
+        "rule-set:google,youtube,roblox,bing": foreignNameservers,
+        "geosite:geolocation-!cn": foreignNameservers,
+    },
+    "proxy-server-nameserver": [...domesticNameservers, ...foreignNameservers],
+};
+
+// 域名嗅探
+const snifferConfig = {
+    "enable": true,
+    "force-dns-mapping": true,
+    "parse-pure-ip": true,
+    "override-destination": true,
+    "sniff": {
+        "TLS": {
+            "ports": [443, 8443],
+        },
+        "HTTP": {
+            "ports": [80, "8080-8880"],
+            "override-destination": true,
+        },
+        "QUIC": {
+            "ports": [443, 8443]
+        },
+    }
+};
+
+// 主函数
+function main(config) {
+    const proxyCount = config?.proxies?.length ?? 0;
+    const proxyProviderCount =
+        typeof config?.["proxy-providers"] === "object"
+            ? Object.keys(config["proxy-providers"]).length
+            : 0;
+    if (proxyCount === 0 && proxyProviderCount === 0) {
+        throw new Error("配置文件中未找到任何代理");
+    }
+
+    if (config.proxies && Array.isArray(config.proxies)) {
+        config.proxies.forEach(proxy => {
+            proxy.udp = true;    
+        });
+    }
+
+    // 配置
+    config["profile"] = {
+        "store-selected": true,
+        "store-fake-ip": true,
+    };
+    // Geo设置
+    config["geodata-loader"] = "standard";
+    config["geosite-matcher"] = "mph";
+    // 全局客户端指纹
+    config["global-client-fingerprint"] = "chrome";
+    config["global-ua"] = "chrome";
+    // 统一延迟
+    config["unified-delay"] = true;
+    // TCP 并发
+    config["tcp-concurrent"] = true;
+    // 域名服务
+    config["foreign_nameservers"] = foreignNameservers;
+    config["domestic_nameservers"] = domesticNameservers;
+    // DNS配置
+    config["dns"] = dnsConfig;
+    // 域名嗅探
+    config["sniffer"] = snifferConfig;
+    // 规则
+    config["rule-providers"] = ruleProviders;
+    config["rules"] = rules;
+    // 代理组
+    config["proxy-groups"] = proxyGroups;
+    // 返回修改后的配置
+    return config;
+}
+```
