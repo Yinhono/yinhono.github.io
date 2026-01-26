@@ -5,7 +5,7 @@ date:       2025-1-26 19:20:00
 author:     "Rainyin"
 catalog: true
 ---
-省流：强制给节点开启udp=true
+*省流：强制给节点开启udp=true*
 
 这几天沉迷roblox无法自拔，但由于家境贫寒买不起正常的大厂加速器，索性直接走megabox代理出去好了，~~反正roblox延迟高点也不大~~
 
@@ -29,8 +29,7 @@ catalog: true
 ![docs.webp](https://cdn.nodeimage.com/i/qyJWHlc2L5bA84KDLdXXGbiw3yFy30uD.webp)
 
 诶是不是节点默认没开udp的原因？
-于是用clashverge的全局扩展脚本强制给udp=true加上了
-问题还真tm解决了...
+于是用clashverge的全局扩展脚本强制给udp=true加上了，问题还真tm解决了...
 
 附我的全局扩展脚本，抄的网络，根据我自己的使用需求改了下
 ```
