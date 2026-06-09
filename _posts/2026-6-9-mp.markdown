@@ -7,6 +7,7 @@ catalog: true
 ---
 整了一个美图分享站，不定期更新～  
 **[连接](https://img.nekoyin.top/share?token=d83ba11cc43bfa26cd1c89f62b8ba737)**  
+（因为是动态加载，所以图片计数并不准确，请忽略）  
 
 ---
 
