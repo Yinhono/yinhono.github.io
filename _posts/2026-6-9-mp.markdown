@@ -6,4 +6,17 @@ author:     "yin"
 catalog: true
 ---
 整了一个美图分享站，不定期更新～  
-[连接](https://img.nekoyin.top/share?token=d83ba11cc43bfa26cd1c89f62b8ba737)  
+**[连接](https://img.nekoyin.top/share?token=d83ba11cc43bfa26cd1c89f62b8ba737)**  
+
+---
+
+一直以来都想整这么一个站方便自己看收藏的那些好图，但是以前一直感觉电报的收藏夹挺好用的~~所以就咕咕咕了~~，直到有一天某个频道被封了...  
+于是一下几十张图没了（悲）  
+
+---
+
+图片来源于电报上的各大美图频道，看到符合我审美的我会再转发到自己的图床上  
+
+图床使用 [云图](https://github.com/qazzxxx/cloudimgs) ，算是目前用过各个自建图床中我最喜欢的，其他的要么依赖太多（点名兰空），要么 vibe coding 味儿有点重或者操作逻辑比较反人类...唯一可惜的点就是只能本机存储，不能对接第三方后端比如s3等...  
+
+转发工具使用 [img-up-bot](https://github.com/uki0xc/img-up-bot) ，我自己 [fork](https://github.com/Yinhono/img-up-bot) 了一下，一是适配了云图的认证，二是加了环境变量 `ADMIN_ONLY` ，为 `true` 时仅允许 `ADMIN_USERS` 里的电报账户使用  
