@@ -17,8 +17,8 @@ catalog: true
 
 ---
 
-图片来源于电报上的各大美图频道，看到符合我审美的我会再转发到网站上  
+图片来源于 [电报上的各大美图频道](https://t.me/addlist/QQeTzNs4Tb4yMjU1) ，看到符合我审美的我会再转发到网站上  
 
-网站使用 [云图](https://github.com/qazzxxx/cloudimgs) ，算是目前用过各个自建图床中我最喜欢的，其他的要么依赖太多（点名兰空），要么 vibe coding 味儿有点重或者操作逻辑比较反人类...这个项目唯一可惜的点就是只能本机存储，不能对接第三方后端比如s3等...  
+网站使用 [云图](https://github.com/qazzxxx/cloudimgs) ，算是目前用过各个自建图床中我最喜欢的，其他的要么比较重，要么 vibe coding 味儿有点重或者操作逻辑比较反人类...这个项目唯一可惜的点就是只能本机存储，不能对接第三方后端比如s3等...  
 
 电报转发机器人使用 [img-up-bot](https://github.com/uki0xc/img-up-bot) ，我自己 [fork](https://github.com/Yinhono/img-up-bot) 了一下，一是适配了云图的认证，二是加了环境变量 `ADMIN_ONLY` ，为 `true` 时仅允许 `ADMIN_USERS` 里的电报账户使用  
