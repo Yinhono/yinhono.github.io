@@ -1,0 +1,44 @@
+# 网站 | website
+favicon: /images/favicon.ico
+logo:
+title: Yin's Blog
+
+# 菜单 | menu
+menu:
+  Posts: /
+  About: /about
+  Search: /search
+  Homepage: https://nekoyin.com
+
+# 页面布局
+layout:
+  archive: archive
+  category: category
+  about: about
+
+# 页脚 | footer
+footer:
+  count:
+  since: 2025-03-11
+  authorLink: https://github.com/Yinhono
+  themeLink: https://github.com/asukacc/YoruKumo
+
+# 关于页面配置
+about:
+  name: '音'
+  description: '「愿你终有一日能与珍视之人再度相遇。」'
+  avatar: /images/avatar.png
+  email: 'me@nekoyin.com'
+  wechat: ''
+  qq: ''
+  github: 'https://github.com/Yinhono'
+  linkedin: ''
+
+# GSAP 动画配置 | GSAP Animations Configuration
+gsap:
+  enable: true # 是否启用 GSAP 动画
+  entrance_stagger: 0.08 # 列表项进场动画交错时间 (秒)
+  scroll_trigger: true # 是否启用滚动触发渐现动画
+  parallax: true # 是否启用顶部 Banner 视差滚动效果
+  hover_effect: true # 是否启用卡片悬浮 GSAP 交互效果
+

@@ -1,0 +1,258 @@
+/* Premium Image Component Styles with Skeleton Shimmer Loading */
+
+.lazy-image-container
+  position: relative
+  width: 100%
+  overflow: hidden
+  border-radius: 8px
+  margin: 1.5rem 0
+  background: var(--main-color)
+  box-shadow: 0 4px 12px var(--shadow-color2)
+  transition: background 0.4s ease, box-shadow 0.3s ease, border-color 0.3s ease
+
+  &.loaded,
+  &:has(.lazy-image.loaded)
+    background: transparent
+    cursor: zoom-in
+
+  &:hover
+    box-shadow: 0 8px 24px var(--shadow-color1)
+
+  // Fallback for images without pre-loaded aspect ratio
+  &:not([style*="aspect-ratio"])
+    min-height: 250px
+    display: flex
+    align-items: center
+    justify-content: center
+    
+    .lazy-image
+      height: auto
+      position: relative
+
+.lazy-image-skeleton
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: 1
+  background: linear-gradient(90deg, var(--main-color) 25%, var(--shadow-color1) 37%, var(--main-color) 63%)
+  background-size: 200% 100%
+  animation: image-shimmer 1.5s infinite linear
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  pointer-events: none
+
+.lazy-image
+  display: block
+  width: 100%
+  height: 100%
+  object-fit: cover
+  opacity: 0
+  transform: scale(0.985)
+  filter: blur(8px)
+  transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), \
+              transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), \
+              filter 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  z-index: 2
+
+  &.loaded
+    opacity: 1
+    transform: scale(1)
+    filter: blur(0)
+
+    & + .lazy-image-skeleton
+      opacity: 0
+
+/* Image Load Error Fallback State */
+.lazy-image-container.error
+  min-height: 220px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  background: var(--main-color)
+  border: 1px dashed var(--secondary-text-color)
+  box-shadow: none
+
+  .lazy-image-skeleton
+    display: none !important
+
+  .lazy-image
+    display: none !important
+
+  &::after
+    content: '\f1c5' // FontAwesome picture-o icon
+    font-family: 'FontAwesome'
+    font-size: 2.2rem
+    color: var(--secondary-text-color)
+    opacity: 0.6
+    margin-bottom: 0.75rem
+
+  &::before
+    content: '图片加载失败 / Image Load Failed'
+    font-size: 0.85rem
+    font-weight: 500
+    color: var(--secondary-text-color)
+    opacity: 0.8
+    order: 1
+
+@keyframes image-shimmer
+  0%
+    background-position: -200% 0
+  100%
+    background-position: 200% 0
+
+@media (max-width: 768px)
+  .lazy-image-container
+    margin: 1rem 0
+    border-radius: 6px
+    box-shadow: 0 2px 8px var(--shadow-color2)
+
+    &:not([style*="aspect-ratio"])
+      min-height: 180px
+
+  .lazy-image-container.error
+    min-height: 140px
+
+    &::after
+      font-size: 1.8rem
+      margin-bottom: 0.5rem
+
+    &::before
+      font-size: 0.75rem
+
+/* Premium Full-Screen Image Viewer Overlay */
+.image-viewer-overlay
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background: #09090b
+  z-index: 9999
+  display: flex
+  align-items: center
+  justify-content: center
+  opacity: 0
+  visibility: hidden
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+  cursor: zoom-out
+
+  &.active
+    opacity: 1
+    visibility: visible
+    
+    .image-viewer-img
+      transform: scale(1) translateY(0)
+      opacity: 1
+
+.image-viewer-img
+  max-width: 90%
+  max-height: 85%
+  object-fit: contain
+  border-radius: 8px
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3)
+  transform: scale(0.95) translateY(10px)
+  opacity: 0
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+  cursor: zoom-out
+  user-select: none
+  -webkit-user-drag: none
+.image-viewer-close
+  position: absolute
+  top: 1.5rem
+  right: 1.5rem
+  width: 2.5rem
+  height: 2.5rem
+  border-radius: 50%
+  background: rgba(255, 255, 255, 0.08)
+  cursor: pointer
+  z-index: 10000
+  display: flex
+  align-items: center
+  justify-content: center
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+  
+  .close-line
+    position: absolute
+    width: 1.1rem
+    height: 2px
+    background-color: #fff
+    border-radius: 1px
+    transition: background-color 0.3s ease
+    
+    &.close-line-1
+      transform: rotate(45deg)
+    &.close-line-2
+      transform: rotate(-45deg)
+
+  &:hover
+    background: rgba(255, 255, 255, 0.15)
+    transform: scale(1.1)
+
+/* Premium Bottom Toolbar */
+.image-viewer-toolbar
+  position: absolute
+  bottom: 2rem
+  left: 50%
+  transform: translateX(-50%)
+  display: flex
+  align-items: center
+  gap: 1rem
+  background: #26262b
+  border: 1px solid rgba(255, 255, 255, 0.05)
+  padding: 0.5rem 1.2rem
+  border-radius: 2rem
+  z-index: 10000
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2)
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+
+  .toolbar-btn
+    background: transparent
+    border: none
+    color: rgba(255, 255, 255, 0.8)
+    cursor: pointer
+    padding: 0.4rem
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 50%
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+    
+    &:hover
+      background: rgba(255, 255, 255, 0.1)
+      color: #fff
+      transform: scale(1.1)
+      
+    &:active
+      transform: scale(0.95)
+      
+    svg
+      display: block
+      stroke: currentColor
+
+@media (max-width: 768px)
+  .image-viewer-close
+    top: 1rem
+    right: 1rem
+    width: 2.2rem
+    height: 2.2rem
+    
+    .close-line
+      width: 0.9rem
+
+  .image-viewer-img
+    max-width: 95%
+    max-height: 80%
+    border-radius: 4px
+
+  .image-viewer-toolbar
+    bottom: 1.5rem
+    padding: 0.4rem 0.8rem
+    gap: 0.75rem
+    
+    .toolbar-btn
+      padding: 0.35rem
+      svg
+        width: 18px
+        height: 18px

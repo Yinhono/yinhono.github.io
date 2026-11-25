@@ -1,0 +1,45 @@
+menu:
+  Home: ホーム
+  Posts: 記事
+  Stats: 統計
+  About: プロフィール
+  Search: 検索
+  Homepage: ホーム
+  Category: カテゴリー
+  Archive: アーカイブ
+  Tag: タグ
+
+post:
+  list: 記事一覧
+  count: '%s 件'
+  untitled: '(無題)'
+
+about:
+  contact: 連絡先
+  social: ソーシャルメディア
+  copied: 'コピーしました！'
+  copy_failed: 'コピーに失敗しました。手動でコピーしてください。'
+
+stats:
+  all: すべて
+  yearToCategory: 年
+  categoryToTag: カテゴリー
+  tip: 'ヒント：年、カテゴリー、またはタグをクリックすると、対応するアーカイブページにジャンプします'
+  loading: チャート読み込み中...
+  noArticles: 記事データがありません
+  noChartData: チャートデータがありません
+  layoutError: レイアウト計算エラー
+  flowPath: 関連するフローパス
+  relatedArticles: 件の関連記事
+  archiveYear: アーカイブ年
+  articleCategory: カテゴリー
+  tagCategory: タグ
+  containsArticles: '含まれる記事：'
+  clickHint: クリックして対応するアーカイブを表示
+
+footer:
+  runtime: '稼働時間'
+  day: ' 日 '
+  hour: ' 時間 '
+  minute: ' 分 '
+  second: ' 秒'

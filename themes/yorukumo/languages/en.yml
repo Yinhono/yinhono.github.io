@@ -1,0 +1,47 @@
+menu:
+  Home: Home
+  Posts: Posts
+  Stats: Stats
+  About: About
+  Search: Search
+  Homepage: Home
+  Category: Category
+  Archive: Archive
+  Tag: Tag
+
+post:
+  list: Articles
+  count: '%s posts'
+  untitled: '(Untitled)'
+
+about:
+  contact: Contact
+  social: Social Platforms
+  copied: "Copied successfully!"
+  copy_failed: "Failed to copy, please copy manually"
+
+
+stats:
+  all: All
+  yearToCategory: Year
+  categoryToTag: Category
+  tip: 'Tip: Click on a year, category, or tag to view its archive page'
+  loading: Loading chart...
+  noArticles: No article data available
+  noChartData: No chart data available
+  layoutError: Failed to calculate chart layout
+  flowPath: Flow Path
+  relatedArticles: related articles
+  archiveYear: Archive Year
+  articleCategory: Article Category
+  tagCategory: Tag Category
+  containsArticles: 'Contains articles: '
+  clickHint: Click to view the corresponding archive
+
+footer:
+  runtime: "Running for"
+  day: " days "
+  hour: " hours "
+  minute: " minutes "
+  second: " seconds"
+

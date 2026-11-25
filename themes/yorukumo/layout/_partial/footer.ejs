@@ -1,0 +1,49 @@
+<footer class="footer-container">
+  <div class="footer-content">
+    <p class="footer-text">
+      © <%= new Date().getFullYear() %>
+      <%= theme.about.name %>.
+      All Rights Reserved.
+    </p>
+    <p class="footer-text">
+      Cutely powered by <a href="https://hexo.io" target="_blank">Hexo</a> &amp; <a href="https://pages.github.com" target="_blank">GitHub Pages</a>
+    </p>
+    <p class="footer-text">
+      <span><%= __('footer.runtime') %></span>
+      <span id="runtime" class="runtime-badge"></span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  function calculateRuntime() {
+    // 网站开始运行的时间：从第一篇文章的发布日期开始算
+    <% var firstPost = site.posts.sort('date').first(); %>
+    <% var sinceStr = firstPost ? firstPost.date.format('YYYY-MM-DD HH:mm:ss') : theme.footer.since; %>
+    const startTime = new Date('<%= sinceStr %>');
+    const currentTime = new Date();
+
+    const timeDiff = currentTime - startTime;
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+    const dayStr = '<%= __("footer.day") %>';
+    const hourStr = '<%= __("footer.hour") %>';
+    const minuteStr = '<%= __("footer.minute") %>';
+    const secondStr = '<%= __("footer.second") %>';
+
+    document.getElementById(
+      'runtime'
+    ).innerHTML = `${days}${dayStr}${hours}${hourStr}${minutes}${minuteStr}${seconds}${secondStr}`;
+  }
+
+  // 初始运行
+  calculateRuntime();
+  // 每秒更新一次
+  setInterval(calculateRuntime, 1000);
+</script>
+

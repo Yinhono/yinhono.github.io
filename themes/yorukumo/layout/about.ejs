@@ -1,0 +1,18 @@
+<!-- 头部 -->
+<%- partial('_partial/header',{}, {cache: true}) %>
+
+<!-- 页面内容 -->
+<div class="page-content">
+  <main class="about-main">
+    <h1 class="about-title">关于我</h1>
+
+    <!-- 引言 -->
+    <h4 class="about-quote"><%= page.description || theme.about.description %></h4>
+
+    <!-- 自我介绍正文 -->
+    <% if (page.content) { %>
+    <div class="about-content"><%- page.content %></div>
+    <% } %>
+  </main>
+</div>
+

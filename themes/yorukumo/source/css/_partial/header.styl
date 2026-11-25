@@ -1,0 +1,348 @@
+#header-container
+  position: fixed
+  width: 100%
+  top: 0
+  z-index: 1000
+  height:  4rem
+  padding: 1rem 2rem
+  box-sizing: border-box
+  display flex
+  justify-content space-between
+  align-items center
+  color: var(--header-color)
+  // 全面过渡效果，使高度变化、滑动隐藏/显示、背景切换极其平稳
+  // 时长设为 0.4s，与 Swiper 收缩折叠动画时长及缓动曲线完全同步，实现完美统一
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+
+  // 通过嵌套提升选择器优先级为 ID+Class (1-1-0)，优雅清除所有 !important 标记
+  &.header-top
+    height: 4rem
+    transform: translateY(0)
+    // 页面顶端：透明背景压在头图上（不加毛玻璃）；字和图标统一白色
+    --header-color: #ffffff
+    background-color: var(--header-bg-transparent)
+    box-shadow: none
+
+  &.header-normal,
+  &.header-mobile
+    height: 4rem
+    transform: translateY(0)
+    // 滚动后 / 菜单展开时：背景和字色都跟随主题自适应（浅色白底黑字，深色黑底白字）
+    background-color: var(--header-bg)
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03)
+
+  &.header-hidden
+    height: 4rem
+    transform: translateY(-100%)
+
+
+
+
+
+
+.logo
+  font-size 1.5rem
+  font-weight bold
+
+  a
+    text-decoration none
+    color var(--header-color)
+
+  img
+    max-height 40px
+    width auto
+
+// 标题栏右侧操作区：导航菜单 + 深色切换 + 汉堡按钮
+.header-actions
+  display flex
+  align-items center
+  gap 0.75rem
+
+// 深色模式切换键
+.theme-toggle
+  display flex
+  align-items center
+  justify-content center
+  width 40px
+  height 40px
+  background none
+  border none
+  cursor pointer
+  padding 0
+  color var(--header-color)
+  border-radius 50%
+  transition background-color 0.2s ease
+  // 移动端点按不留灰底：去掉点按高亮，焦点背景清掉，键盘焦点改用 focus-visible
+  -webkit-tap-highlight-color transparent
+  tap-highlight-color transparent
+
+  // 悬停反馈只在有鼠标的设备上生效，触屏点按后不再残留灰底
+  @media (hover: hover)
+    &:hover
+      background var(--shadow-color2)
+
+  &:focus
+    outline none
+    background none
+
+  &:focus-visible
+    outline 2px solid var(--header-color)
+    outline-offset 2px
+
+  svg
+    width 20px
+    height 20px
+
+  .icon-sun
+    display none
+
+// 深色模式下显示太阳图标，浅色模式下显示月亮图标
+html[data-theme='dark'] .theme-toggle
+  .icon-moon
+    display none
+
+  .icon-sun
+    display block
+
+// 透明头状态下（压在头图上），切换键悬停用白色半透明才看得见
+#header-container.header-top .theme-toggle
+  @media (hover: hover)
+    &:hover
+      background rgba(255, 255, 255, 0.15)
+
+.nav-menu
+  display flex
+  align-items center
+
+.nav-list
+  display flex
+  list-style none
+  margin 0
+  padding 0
+  gap 2rem
+
+  a
+    display inline-flex
+    align-items center
+    justify-content center
+    text-align center
+    width 4rem
+    height 40px
+    text-decoration none
+    color var(--header-color)
+    line-height 1
+    font-size 1.2rem
+    font-weight bold
+    position relative
+    padding-bottom 0
+
+    &::after
+      content ''
+      position absolute
+      bottom 6px
+      left 0
+      width 0
+      height 2px
+      background-color var(--header-color)
+      transition width 0.3s ease
+
+    &:hover::after
+      width 100%
+
+    &.active::after
+      width 100%
+      background-color var(--header-color)
+
+    // 外链（跳转主站）：内容自适应宽度，带 open_in_new 图标
+    &.external-link
+      width auto
+
+      // 保险：外链就算带 active 也不显示下划线
+      &.active::after
+        width 0
+
+      .external-icon
+        width 1rem
+        height 1rem
+        margin-left 0.15rem
+        flex-shrink 0
+        fill currentColor
+
+.menu-toggle
+  display none
+  position relative
+  width 40px
+  height 40px
+  background none
+  border none
+  cursor pointer
+  padding 0
+  color var(--header-color)
+  z-index 1001
+  align-items center
+  justify-content center
+  // 移动端点按不留高亮，键盘焦点改用 focus-visible
+  -webkit-tap-highlight-color transparent
+  tap-highlight-color transparent
+
+  &:focus
+    outline none
+
+  &:focus-visible
+    outline 2px solid var(--header-color)
+    outline-offset 2px
+
+  // 汉堡图标：40px 按钮里 20px 宽的三条线，展开时上下两条旋转成 ×，中间一条淡出
+  span.line
+    position absolute
+    left 10px
+    width 20px
+    height 2px
+    background-color currentColor
+    border-radius 1px
+    transition transform 0.2s ease, opacity 0.2s ease
+
+    &.line-1
+      top 13px
+    &.line-2
+      top 19px
+    &.line-3
+      top 25px
+
+  &[aria-expanded="true"]
+    .line-1
+      transform translateY(6px) rotate(45deg)
+    .line-2
+      opacity 0
+    .line-3
+      transform translateY(-6px) rotate(-45deg)
+
+// ==========================================
+// 三端自适应兼容设计 (手机、平板、电脑)
+// ==========================================
+
+// 1. 电脑端 (宽屏) 样式优化
+@media (min-width: 1025px)
+  #header-container
+    padding: 1rem 4rem // 大气宽屏内边距
+
+// 2. 平板端 样式优化 (防重叠拥挤)
+@media (min-width: 769px) and (max-width: 1024px)
+  #header-container
+    padding: 1rem 2.5rem
+  
+  .nav-list
+    gap 1.5rem // 减小间距以防挤压 Logo
+    
+    a
+      font-size 1.1rem
+      width 3.5rem
+
+// 3. 手机端 样式优化 (展开高斯模糊毛玻璃)
+@media (max-width: 768px)
+  #header-container
+    padding: 1rem 1.5rem
+  
+  .logo
+    font-size 1.3rem
+
+  .menu-toggle
+    display flex
+
+  .nav-menu
+    position absolute
+    top 100%
+    left 0
+    right 0
+    height calc(100vh - 4rem)
+    display flex
+    flex-direction column
+    justify-content center
+    opacity 0
+    visibility hidden
+    transform translateY(-10px)
+    transition opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+               visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+    // 手机端菜单不透明实色背景
+    background: var(--mobile-menu-bg)
+
+    &.active
+      opacity 1
+      visibility visible
+      transform translateY(0)
+
+  .nav-list
+    width 100%
+    height auto
+    flex-direction column
+    // gap 归零：靠 a 上下一致的 padding 撑开，分隔线正好落在两行字中间，上下间距对称
+    gap 0
+    padding 3rem 2rem
+
+    li
+      width 100%
+      list-style none
+      border-bottom 1px solid rgba(128, 128, 128, 0.15)
+
+      &:last-child
+        border-bottom none
+
+    a
+      display flex
+      align-items center
+      justify-content center
+      width 100%
+      font-size 1.25rem
+      font-weight 600
+      text-align center
+      padding 1.92rem 1.5rem
+      border-radius 12px
+      transition all 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+      color var(--text-color)
+      position relative
+
+      &::after
+        display none !important
+
+      // 移动端使用精致的圆角药丸悬停/轻触反馈背景
+      &:hover, &:active
+        background var(--shadow-color2)
+        transform translateY(-2px)
+        color var(--text-color)
+
+      // 当前页不做特殊背景，和其他菜单项外观统一
+
+      // 外链图标脱离居中流：主页两字自己居中、跟上面几项对齐，图标贴在右边额外伸出
+      // 字号 1.25rem，两字宽约 2.5rem，右缘在 50% + 1.25rem，再加 0.15rem 间距
+      .external-icon
+        position absolute
+        left calc(50% + 1.4rem)
+        top 50%
+        transform translateY(-50%)
+        margin-left 0
+
+  // 菜单项波浪式渐现动效 (Staggered Entrance Animation)
+  @keyframes menuFadeIn
+    from
+      opacity 0
+      transform translateY(15px)
+    to
+      opacity 1
+      transform translateY(0)
+
+  .nav-menu.active
+    .nav-list li
+      animation menuFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both
+      
+      for i in (1..8)
+        &:nth-child({i})
+          animation-delay (0.05s * i)
+
+
+
+

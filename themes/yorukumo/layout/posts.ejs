@@ -1,0 +1,59 @@
+<!-- 头部 -->
+<%- partial('_partial/header',{}, {cache: true}) %>
+
+<!-- 页面内容 -->
+<div class="page-content">
+  <main class="post-list timeline-wrapper">
+    <!-- 定义 lastYear 变量 -->
+    <% var lastYear; %>
+
+    <!-- 遍历全部文章，按日期倒序 -->
+    <% site.posts.sort('-date').each(function(post){ %>
+
+    <!-- 获取文章年份 -->
+    <% var year = date(post.date,'YYYY'); %>
+
+    <!-- 如果年份变化，则显示年份标题 -->
+    <% if (lastYear !== year) { %>
+    <div class="timeline-year-node">
+      <div class="timeline-date"></div>
+      <div class="timeline-axis">
+        <div class="timeline-year-dot"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-year-text"><%= year %></div>
+      </div>
+    </div>
+    <% } %>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <span class="timeline-date-md"><%= date(post.date, 'MM-DD') %></span>
+        <span class="timeline-date-year"><%= date(post.date, 'YYYY') %></span>
+      </div>
+      <div class="timeline-axis">
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-content">
+        <a href="<%- url_for(post.path) %>">
+          <div class="postItem">
+            <p class="postItem-title" title="<%= post.title || __('post.untitled') %>">
+              <%= post.title || __('post.untitled') %>
+            </p>
+            <p class="postItem-date"><%= date(post.date, 'YYYY-MM-DD') %></p>
+            <p class="postItem-tags">
+              <% post.tags.each(function(tag){ %>
+              <span class="postItem-tag"><%= tag.name %></span>
+              <% }) %>
+            </p>
+            <p class="postItem-excerpt"><%= post.description || post.excerpt || '' %></p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 更新 lastYear 变量 -->
+    <% lastYear = year; %> 
+    <% }); %>
+  </main>
+</div>

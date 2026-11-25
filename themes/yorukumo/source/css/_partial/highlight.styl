@@ -1,0 +1,185 @@
+// Code block container
+// 颜色全部走 --code-* 变量：日间浅底深字（Latte），夜间深底浅字（Mocha）
+// 无语言的 plaintext 代码块没有语法着色，靠这里的 color 保证可读
+figure.highlight
+  position relative
+  background var(--code-bg)
+  color var(--code-text)
+  border-radius 12px
+  margin 1.5rem 0
+  box-shadow 0 8px 24px rgba(0, 0, 0, 0.15)
+  overflow hidden
+  font-family Consolas, Monaco, Fira Code, monospace
+  font-size 0.85rem
+  line-height 1.6
+  max-width 100%
+
+  table
+    width 100% !important
+    table-layout fixed !important
+    border-collapse collapse !important
+    margin 0 !important
+    padding 0 !important
+    border none !important
+
+  td
+    padding 0 !important
+    border none !important
+
+  pre
+    margin 0 !important
+    padding 0 !important
+    background transparent !important
+    border none !important
+    font-family inherit !important
+    line-height inherit !important
+    white-space pre !important
+    word-break normal !important
+    overflow-wrap normal !important
+    word-wrap normal !important
+
+  code
+    margin 0 !important
+    padding 0 !important
+    background transparent !important
+    border none !important
+    font-family inherit !important
+    line-height inherit !important
+    white-space pre !important
+    word-break normal !important
+    overflow-wrap normal !important
+    word-wrap normal !important
+
+  .line
+    display block
+    line-height 1.6
+    min-height 1.6em
+    white-space pre !important
+    word-break normal !important
+    overflow-wrap normal !important
+    word-wrap normal !important
+
+  br
+    display none
+
+  // Toolbar styling
+  .code-toolbar
+    display flex
+    justify-content space-between
+    align-items center
+    background var(--code-toolbar-bg)
+    padding 0.6rem 1rem
+    border-bottom 1px solid var(--code-toolbar-border)
+    user-select none
+
+    .code-dots
+      display flex
+      gap 6px
+
+      .code-dot
+        width 10px
+        height 10px
+        border-radius 50%
+        display inline-block
+
+        &.red
+          background #ff5f56
+        &.yellow
+          background #ffbd2e
+        &.green
+          background #27c93f
+
+    .code-meta
+      display flex
+      align-items center
+      gap 12px
+
+      .code-lang
+        color var(--code-lang)
+        font-size 0.75rem
+        font-weight 600
+        text-transform uppercase
+        letter-spacing 0.5px
+
+      .code-copy-btn
+        background var(--code-copy-btn-bg)
+        border 1px solid var(--code-copy-btn-border)
+        color var(--code-copy-btn-color)
+        padding 2px 8px
+        border-radius 4px
+        font-size 0.7rem
+        cursor pointer
+        transition all 0.2s ease
+        font-family inherit
+
+        &:hover
+          background var(--code-copy-btn-hover-bg)
+          color var(--code-copy-btn-hover-color)
+          border-color var(--code-copy-btn-hover-border)
+
+        &.copied
+          background rgba(39, 201, 63, 0.15)
+          border-color rgba(39, 201, 63, 0.3)
+          color #a6e3a1
+
+  // Gutter & line numbers
+  td.gutter
+    background var(--code-gutter-bg)
+    color var(--code-gutter-text)
+    text-align left !important
+    padding 0.8rem 0.8rem !important
+    user-select none
+    border-right 1px solid var(--code-toolbar-border) !important
+    width 35px
+
+    .line
+      display block
+
+  // Code body
+  td.code
+    padding 0.8rem 1rem !important
+    background var(--code-bg)
+    overflow-x auto
+
+    // Custom Scrollbar
+    &::-webkit-scrollbar
+      height 8px
+    &::-webkit-scrollbar-track
+      background var(--code-bg)
+    &::-webkit-scrollbar-thumb
+      background var(--code-scrollbar-thumb)
+      border-radius 4px
+      &:hover
+        background var(--code-scrollbar-thumb-hover)
+
+    pre
+      overflow visible
+
+  // Syntax highlighting (Catppuccin: Latte 日间 / Mocha 夜间，由变量切换)
+  .comment, .quote
+    color var(--code-comment)
+    font-style italic
+
+  .keyword, .selector-tag, .addition
+    color var(--code-keyword)
+
+  .string, .meta .string, .doctag
+    color var(--code-string)
+
+  .number, .literal
+    color var(--code-number)
+
+  .title, .title.function_, .section
+    color var(--code-title)
+
+  .params, .attr
+    color var(--code-params)
+
+  .built_in, .type
+    color var(--code-built-in)
+
+  .bullet, .symbol, .attribute
+    color var(--code-bullet)
+
+  .operator
+    color var(--code-operator)

@@ -1,0 +1,88 @@
+:root
+    --main-color #f8f8f8
+    --secondary-color #ffffff
+    --text-color #171717
+    --secondary-text-color #6f6f6f
+    --shadow-color #FFFFFF33
+    --shadow-color1 #0000001a
+    --shadow-color2 #0000000d
+    --header-bg #ffffff
+    --header-bg-transparent rgba(255, 255, 255, 0)
+    --mobile-menu-bg #ffffff
+    // 标题栏前景色：默认跟正文颜色走（自适应）；透明头状态下在 header.styl 里单独覆盖成白色
+    // 手机端展开的菜单面板不用它，用 --text-color 自适应
+    --header-color var(--text-color)
+    // 代码块：浅色（Catppuccin Latte 配色）
+    --code-bg #f5f5f5
+    --code-text #4c4f69
+    --code-gutter-bg #ececec
+    --code-gutter-text #9ca0b0
+    --code-toolbar-bg #ececec
+    --code-toolbar-border rgba(0, 0, 0, 0.06)
+    --code-lang #6c7086
+    --code-copy-btn-color #4c4f69
+    --code-copy-btn-bg rgba(0, 0, 0, 0.03)
+    --code-copy-btn-border rgba(0, 0, 0, 0.12)
+    --code-copy-btn-hover-bg rgba(0, 0, 0, 0.06)
+    --code-copy-btn-hover-color #1e66f5
+    --code-copy-btn-hover-border rgba(0, 0, 0, 0.2)
+    --code-scrollbar-thumb #c8c8c8
+    --code-scrollbar-thumb-hover #b0b0b0
+    --code-comment #9ca0b0
+    --code-keyword #8839ef
+    --code-string #40a02b
+    --code-number #fe640b
+    --code-title #1e66f5
+    --code-params #179299
+    --code-built-in #df8e1d
+    --code-bullet #ea76cb
+    --code-operator #04a5e5
+
+// 暗色模式变量混合器 (Mixin)
+set-dark-theme()
+  --main-color #18181b
+  --secondary-color #09090b
+  --text-color #ededed
+  --secondary-text-color #a0a0a0
+  --shadow-color #00000033
+  --shadow-color1 #ffffff1a
+  --shadow-color2 #ffffff0d
+  --header-bg #09090b
+  --header-bg-transparent rgba(9, 9, 11, 0)
+  --mobile-menu-bg #09090b
+  // 代码块：深色（Catppuccin Mocha 配色）
+  --code-bg #1e1e28
+  --code-text #cdd6f4
+  --code-gutter-bg #181825
+  --code-gutter-text #585b70
+  --code-toolbar-bg #161622
+  --code-toolbar-border rgba(255, 255, 255, 0.05)
+  --code-lang #6c7086
+  --code-copy-btn-color #a6adc8
+  --code-copy-btn-bg rgba(255, 255, 255, 0.05)
+  --code-copy-btn-border rgba(255, 255, 255, 0.1)
+  --code-copy-btn-hover-bg rgba(255, 255, 255, 0.1)
+  --code-copy-btn-hover-color #cdd6f4
+  --code-copy-btn-hover-border rgba(255, 255, 255, 0.2)
+  --code-scrollbar-thumb #313244
+  --code-scrollbar-thumb-hover #45475a
+  --code-comment #6c7086
+  --code-keyword #cba6f7
+  --code-string #a6e3a1
+  --code-number #fab387
+  --code-title #89b4fa
+  --code-params #94e2d5
+  --code-built-in #f9e2af
+  --code-bullet #f5c2e7
+  --code-operator #89dceb
+
+// 优先通过 data-theme 属性切换，方便后续手动控制
+html[data-theme='dark']
+  set-dark-theme()
+
+// 优雅降级：系统主题为 dark 且 JS 没有强制指定为 light 时启用暗色
+@media (prefers-color-scheme: dark)
+  :root:not([data-theme='light'])
+    set-dark-theme()
+
+

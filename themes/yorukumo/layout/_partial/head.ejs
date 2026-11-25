@@ -1,0 +1,55 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 主题初始化：优先用 localStorage 保存的选择，否则跟随系统；在 CSS 前执行，避免闪烁 -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = (saved === 'dark' || saved === 'light') ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <!-- 字体 (霞鹜文楷 LXGW WenKai Webfont) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.min.css" />
+  <!-- favicon -->
+  <%- favicon_tag(theme.favicon) %><%- css('css/style') %>
+
+  <!-- 页面标题：有页面名时为 "页面名 | Yin's Blog"，首页为 "Yin's Blog" -->
+  <%
+    var pageTitle = page.title;
+    if (!pageTitle) {
+      if (page.category) {
+        pageTitle = page.category;
+      } else if (page.tag) {
+        pageTitle = page.tag;
+      } else if (page.archive) {
+        if (page.year) {
+          pageTitle = page.year + (page.month ? '-' + page.month : '');
+        } else {
+          pageTitle = __('menu.Archive');
+        }
+      }
+    }
+    var fullTitle = pageTitle ? pageTitle + ' | ' + config.title : config.title;
+  %>
+  <title><%= fullTitle %></title>
+  <!-- 注入配置到全局变量 -->
+  <script>
+    window.SITE_CONFIG = {
+      root: '<%= config.root %>',
+      gsap: <%- JSON.stringify(theme.gsap || { enable: true, entrance_stagger: 0.08, scroll_trigger: true, parallax: true, hover_effect: true }) %>
+    };
+  </script>
+
+  <!-- 引入 GSAP 核心库及 ScrollTrigger 插件 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- 加载JS文件 -->
+  <%- js(['js/head.js', 'js/iconfont.js','js/header.js']) %>
+</head>
